@@ -82,7 +82,48 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Altura do header fixo: âncoras não ficam escondidas atrás dele */
+    scroll-padding-top: 4rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Entrada suave do conteúdo. Atraso via --rise-delay. Desligada com prefers-reduced-motion. */
+@utility rise-in {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: rise-in 0.7s cubic-bezier(0.22, 0.7, 0.2, 1) var(--rise-delay, 0ms) both;
+  }
+}
+
+/* Leve acomodação da imagem do hero (só transform, sem custo de layout). */
+@utility settle {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: settle 1.6s cubic-bezier(0.22, 0.7, 0.2, 1) both;
   }
 }
 

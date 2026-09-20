@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Car,
   Building2,
@@ -22,7 +22,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import logo from "@/assets/buiu-mark.png.asset.json";
+// clsx direto (e não cn/tailwind-merge) para não pesar o bundle da rota
+import clsx from "clsx";
+import logo from "@/assets/buiu-mark.png";
 import heroWrap from "@/assets/hero-wrap.jpg";
 import portEnvelopamento from "@/assets/port-envelopamento.jpg";
 import portFrota from "@/assets/port-frota.jpg";
@@ -105,6 +107,12 @@ const STEPS = [
   { n: "04", t: "Entrega revisada", d: "Conferência final de acabamento antes de você retirar." },
 ];
 
+const HERO_AREAS = [
+  ["Veículos", "Carros, motos e frotas"],
+  ["Empresas", "Fachadas e identidade visual"],
+  ["Ambientes", "Papel de parede e películas"],
+];
+
 const FAQ = [
   {
     q: "Quanto tempo leva um envelopamento?",
@@ -163,13 +171,18 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+const FOCUS_RING =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground";
+
 function WhatsButton({
   msg,
   children,
+  size = "md",
   className = "",
 }: {
   msg: string;
   children: React.ReactNode;
+  size?: "md" | "sm";
   className?: string;
 }) {
   return (
@@ -177,131 +190,296 @@ function WhatsButton({
       href={wa(msg)}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-2 bg-primary px-6 py-4 text-sm font-bold uppercase tracking-widest text-primary-foreground transition-transform hover:-translate-y-0.5 ${className}`}
+      className={clsx(
+        "inline-flex items-center justify-center gap-2 bg-primary font-bold uppercase tracking-widest text-primary-foreground",
+        size === "sm" ? "min-h-11 px-3.5 text-xs sm:px-5" : "px-6 py-4 text-sm",
+        "transition-[transform,background-color,box-shadow] duration-200 hover:bg-primary/90 hover:shadow-[0_12px_28px_-12px] hover:shadow-primary/70",
+        "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 active:bg-primary/80",
+        FOCUS_RING,
+        "[&_svg]:transition-transform [&_svg]:duration-200 motion-safe:hover:[&_svg]:-rotate-6 motion-safe:hover:[&_svg]:scale-110",
+        className,
+      )}
     >
       {children}
     </a>
   );
 }
 
-function Index() {
+function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [faq, setFaq] = useState<number | null>(0);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const solid = scrolled || open;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
-          <a href="#top" className="flex shrink-0 items-center">
+    <>
+      {/* Toque fora fecha o menu mobile */}
+      <div
+        aria-hidden="true"
+        onClick={() => setOpen(false)}
+        className={clsx(
+          "fixed inset-0 z-40 bg-background/70 transition-opacity duration-300 motion-reduce:transition-none lg:hidden",
+          open ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+      />
+
+      <header
+        className={clsx(
+          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 motion-reduce:transition-none",
+          solid
+            ? "border-border bg-background/90 shadow-[0_12px_32px_-20px_rgb(0_0_0/0.9)] backdrop-blur-md"
+            : "border-transparent bg-transparent backdrop-blur-[0px]",
+        )}
+      >
+        <div
+          className={clsx(
+            "mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-[height] duration-300 sm:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-8 motion-reduce:transition-none",
+            scrolled ? "h-16" : "h-16 lg:h-[4.5rem]",
+          )}
+        >
+          <a
+            href="#top"
+            onClick={() => setOpen(false)}
+            className={clsx(
+              "flex shrink-0 items-center justify-self-start",
+              FOCUS_RING,
+            )}
+          >
             <img
-              src={logo.url}
+              src={logo}
               alt="Buiu Adesivos - especializado em envelopamento"
-              className="h-10 w-auto md:h-12"
+              width={480}
+              height={260}
+              className={clsx(
+                "h-11 w-auto transition-[height] duration-300 [clip-path:inset(0_0_2.5%_0)] motion-reduce:transition-none",
+                scrolled ? "lg:h-11" : "lg:h-14",
+              )}
             />
           </a>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav
+            aria-label="Principal"
+            className="hidden items-center gap-6 lg:flex xl:gap-9"
+          >
             {NAV.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
-                className="text-xs font-semibold uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+                className={clsx(
+                  "relative py-2 text-xs font-semibold uppercase tracking-[0.18em] text-foreground/75 transition-colors duration-200 hover:text-foreground focus-visible:text-foreground",
+                  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:after:scale-x-100 motion-reduce:after:transition-none",
+                  FOCUS_RING,
+                )}
               >
                 {n.label}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <a
-              href={wa("Olá! Vim pelo site e gostaria de um orçamento.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-2 bg-primary px-4 py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground sm:inline-flex"
+          <div className="flex items-center justify-end gap-2">
+            <WhatsButton
+              msg="Olá! Vim pelo site e gostaria de um orçamento."
+              size="sm"
             >
               <MessageCircle className="size-4" />
               Orçamento
-            </a>
+            </WhatsButton>
             <button
+              type="button"
               onClick={() => setOpen((v) => !v)}
-              aria-label="Abrir menu"
-              className="inline-flex size-10 items-center justify-center border border-border text-foreground lg:hidden"
+              aria-label={open ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={open}
+              aria-controls="menu-mobile"
+              className={clsx(
+                "relative inline-flex size-11 items-center justify-center border border-border text-foreground transition-colors duration-200 hover:bg-secondary active:bg-accent lg:hidden",
+                FOCUS_RING,
+              )}
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+              <Menu
+                className={clsx(
+                  "absolute size-5 transition-[opacity,transform] duration-200 motion-reduce:transition-none",
+                  open && "rotate-90 opacity-0",
+                )}
+              />
+              <X
+                className={clsx(
+                  "absolute size-5 transition-[opacity,transform] duration-200 motion-reduce:transition-none",
+                  !open && "-rotate-90 opacity-0",
+                )}
+              />
             </button>
           </div>
         </div>
 
-        {open && (
-          <nav className="border-t border-border bg-background px-5 pb-5 pt-2 lg:hidden">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className="block border-b border-border py-3 text-sm font-semibold uppercase tracking-widest text-foreground"
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-        )}
+        <div
+          id="menu-mobile"
+          inert={!open}
+          className={clsx(
+            "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none lg:hidden",
+            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+          )}
+        >
+          <div className="overflow-hidden">
+            <nav
+              aria-label="Menu mobile"
+              className="border-t border-border px-4 pb-3 sm:px-5"
+            >
+              {NAV.map((n, i) => (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setOpen(false)}
+                  style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms" }}
+                  className={clsx(
+                    "flex min-h-14 items-center justify-between border-b border-border text-sm font-semibold uppercase tracking-[0.2em] text-foreground transition-[opacity,transform,color] duration-300 last:border-b-0 active:text-primary motion-reduce:transition-none",
+                    open
+                      ? "translate-y-0 opacity-100"
+                      : "-translate-y-1 opacity-0",
+                    FOCUS_RING,
+                  )}
+                >
+                  {n.label}
+                  <ArrowRight
+                    className="size-4 text-primary"
+                    aria-hidden="true"
+                  />
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
       </header>
+    </>
+  );
+}
 
-      {/* Hero */}
-      <section id="top" className="relative isolate flex min-h-[92vh] items-end overflow-hidden pt-20">
+function Hero() {
+  return (
+    <section
+      id="top"
+      className="relative isolate flex min-h-svh items-end overflow-hidden pt-24 lg:pt-28"
+    >
+      {/* Imagem + camadas de leitura (mobile: imagem no topo, dissolvendo no preto) */}
+      <div className="absolute inset-x-0 top-0 -z-10 h-[68svh] md:inset-0 md:h-auto">
         <img
           src={heroWrap}
-          alt="Aplicação de película em carro esportivo preto"
+          alt="Aplicação de película fosca em carro esportivo preto"
           width={1600}
           height={1104}
-          className="absolute inset-0 -z-10 size-full object-cover"
+          fetchPriority="high"
+          decoding="async"
+          className="settle size-full object-cover object-[42%_center] md:object-center"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-background/80 to-background/30" />
+        {/* base: funde a foto ao fundo preto, mais forte embaixo (onde fica o texto) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent" />
+        {/* topo: garante leitura do header sobre a foto */}
+        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-background/90 via-background/85 via-50% to-transparent" />
+        {/* desktop: escurece o lado do texto */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-background/85 via-background/40 to-transparent md:block" />
+        {/* vinheta */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,transparent_45%,var(--background)_125%)]" />
+      </div>
 
-        <div className="mx-auto w-full max-w-7xl px-5 pb-16 md:pb-24">
-          <p className="mb-5 inline-flex items-center gap-2 border-l-4 border-primary bg-background/60 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.25em] text-steel">
-            Especializado em envelopamento
-          </p>
-          <h1 className="display-title max-w-4xl text-5xl text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-            Seu veículo e sua marca
-            <span className="text-primary"> com acabamento de outro nível</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Envelopamento de carros, motos e frotas, fachadas em ACM, adesivos,
-            letras em relevo e insulfilm. Aplicação feita por equipe
-            especializada, com material selecionado para cada projeto.
-          </p>
+      <div className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-5 md:pb-20">
+        <p
+          style={{ "--rise-delay": "0ms" } as React.CSSProperties}
+          className="rise-in mb-6 flex items-center [text-shadow:0_1px_16px_rgb(0_0_0/0.7)] gap-3 text-[11px] font-bold uppercase tracking-[0.28em] text-steel md:mb-8"
+        >
+          <span aria-hidden="true" className="h-0.5 w-8 bg-primary" />
+          Especializado em envelopamento
+        </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <WhatsButton msg="Olá! Quero um orçamento de envelopamento.">
-              <MessageCircle className="size-5" />
-              Orçamento no WhatsApp
-            </WhatsButton>
-            <a
-              href="#portfolio"
-              className="inline-flex items-center justify-center gap-2 border border-border px-6 py-4 text-sm font-bold uppercase tracking-widest text-foreground transition-colors hover:bg-secondary"
-            >
-              Ver portfólio
-              <ArrowRight className="size-4" />
-            </a>
-          </div>
+        <h1
+          style={{ "--rise-delay": "90ms" } as React.CSSProperties}
+          className="rise-in display-title text-[clamp(2.9rem,15vw,4.75rem)] text-foreground sm:text-7xl md:text-8xl lg:text-[clamp(4.5rem,12vh,7rem)]"
+        >
+          Seu veículo.
+          <br />
+          Sua marca.
+          <br />
+          <span className="text-primary">Seu estilo.</span>
+        </h1>
 
-          <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-4 border-t border-border pt-6">
-            {[
-              ["Veículos", "Carros, motos e frotas"],
-              ["Empresas", "Fachadas e identidade"],
-              ["Ambientes", "Papel de parede e películas"],
-            ].map(([t, d]) => (
-              <div key={t}>
-                <dt className="display-title text-lg text-primary md:text-xl">{t}</dt>
-                <dd className="mt-1 text-xs text-muted-foreground md:text-sm">{d}</dd>
-              </div>
-            ))}
-          </dl>
+        <p
+          style={{ "--rise-delay": "200ms" } as React.CSSProperties}
+          className="rise-in mt-6 max-w-xl text-base [text-shadow:0_1px_16px_rgb(0_0_0/0.7)] leading-relaxed text-foreground/80 md:text-lg"
+        >
+          Envelopamento de veículos e soluções em comunicação visual para
+          transformar projetos com acabamento profissional.
+        </p>
+
+        <div
+          style={{ "--rise-delay": "300ms" } as React.CSSProperties}
+          className="rise-in mt-8 flex flex-col gap-3 sm:flex-row md:mt-9"
+        >
+          <WhatsButton
+            msg="Olá! Quero um orçamento de envelopamento."
+            className="min-h-[3.25rem] w-full sm:w-auto"
+          >
+            <MessageCircle className="size-5" />
+            Orçamento no WhatsApp
+          </WhatsButton>
+          <a
+            href="#portfolio"
+            className={clsx(
+              "group inline-flex min-h-[3.25rem] w-full items-center justify-center gap-2 border border-foreground/25 bg-background/30 px-6 py-4 text-sm font-bold uppercase tracking-widest text-foreground backdrop-blur-sm sm:w-auto",
+              "transition-[transform,background-color,border-color] duration-200 hover:border-foreground/60 hover:bg-foreground/10 active:bg-foreground/15",
+              "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0",
+              FOCUS_RING,
+            )}
+          >
+            Ver portfólio
+            <ArrowRight className="size-4 transition-transform duration-200 motion-safe:group-hover:translate-x-1" />
+          </a>
         </div>
-      </section>
+
+        <dl
+          style={{ "--rise-delay": "400ms" } as React.CSSProperties}
+          className="rise-in mt-10 grid max-w-2xl grid-cols-3 gap-x-4 gap-y-4 md:mt-12 md:gap-x-8"
+        >
+          {HERO_AREAS.map(([t, d]) => (
+            <div
+              key={t}
+              className="relative border-t border-foreground/15 pt-3 before:absolute before:-top-px before:left-0 before:h-0.5 before:w-8 before:bg-primary"
+            >
+              <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-steel">
+                {t}
+              </dt>
+              <dd className="mt-1.5 text-xs leading-snug text-muted-foreground md:text-sm">
+                {d}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+function Index() {
+  const [faq, setFaq] = useState<number | null>(0);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+
+      <Hero />
 
       {/* Envelopamento */}
       <section id="envelopamento" className="bg-surface py-20 md:py-28">
@@ -574,7 +752,7 @@ function Index() {
       {/* Footer */}
       <footer className="border-t border-border bg-surface py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-5 text-center md:flex-row md:justify-between md:text-left">
-          <img src={logo.url} alt="Buiu Adesivos" className="h-12 w-auto" />
+          <img src={logo} alt="Buiu Adesivos" className="h-12 w-auto" />
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Buiu Adesivos — Especializado em envelopamento.
           </p>

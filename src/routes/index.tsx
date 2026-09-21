@@ -20,6 +20,8 @@ import {
   Truck,
   Sparkles,
   ArrowRight,
+  Play,
+  Pause,
 } from "lucide-react";
 
 // clsx direto (e não cn/tailwind-merge) para não pesar o bundle da rota
@@ -29,6 +31,8 @@ import heroWrap from "@/assets/hero-wrap.jpg";
 import portEnvelopamento from "@/assets/port-envelopamento.jpg";
 import portFrota from "@/assets/port-frota.jpg";
 import portMoto from "@/assets/port-moto.jpg";
+import videoEmAcao from "@/assets/envelopamento-em-acao.mp4";
+import videoEmAcaoPoster from "@/assets/envelopamento-em-acao-poster.webp";
 import workAlfaLooks from "@/assets/work-alfalooks.webp";
 import workMyCar from "@/assets/work-mycar.webp";
 import workDivaFerrari from "@/assets/work-divaferrari.webp";
@@ -300,6 +304,81 @@ function Reveal({
     >
       {children}
     </Element>
+  );
+}
+
+// Vídeo mudo em loop: só toca enquanto está visível, tem botão de pausa e não
+// inicia sozinho com prefers-reduced-motion.
+function LoopVideo({
+  src,
+  poster,
+  label,
+}: {
+  src: string;
+  poster: string;
+  label: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const userPaused = useRef(false);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting && !userPaused.current)
+          video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
+
+  const toggle = () => {
+    const video = ref.current;
+    if (!video) return;
+    if (video.paused) {
+      userPaused.current = false;
+      video.play().catch(() => {});
+    } else {
+      userPaused.current = true;
+      video.pause();
+    }
+  };
+
+  return (
+    <div className="relative mx-auto aspect-[478/850] w-full max-w-[300px] overflow-hidden border border-border bg-surface shadow-[0_30px_60px_-30px_rgb(0_0_0/0.9)] before:absolute before:left-0 before:top-0 before:z-10 before:h-1 before:w-14 before:bg-primary sm:max-w-[340px]">
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-label={label}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        className="size-full object-cover"
+      />
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label={playing ? "Pausar vídeo" : "Reproduzir vídeo"}
+        className={clsx(
+          "absolute bottom-3 left-3 inline-flex size-11 items-center justify-center rounded-full bg-background/70 text-foreground backdrop-blur-sm transition-colors duration-200 hover:bg-background/90 active:bg-background",
+          FOCUS_RING,
+        )}
+      >
+        {playing ? <Pause className="size-5" /> : <Play className="size-5" />}
+      </button>
+    </div>
   );
 }
 
@@ -703,6 +782,40 @@ function Index() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Vídeo */}
+      <section id="em-acao" className="border-t border-border py-20 md:py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
+          <Reveal>
+            <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-primary">
+              Em ação
+            </span>
+            <h2 className="display-title mt-4 text-4xl text-foreground md:text-5xl">
+              Veja o envelopamento de perto
+            </h2>
+            <p className="mt-5 max-w-lg text-muted-foreground md:text-lg">
+              Um envelopamento completo em veículo off-road, com estampa
+              personalizada. Veja o acabamento de perto e chame no WhatsApp para
+              orçar o seu projeto.
+            </p>
+            <WhatsButton
+              className="mt-8"
+              msg="Olá! Vi o vídeo no site e quero um envelopamento como esse."
+            >
+              <MessageCircle className="size-5" />
+              Quero um projeto assim
+            </WhatsButton>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <LoopVideo
+              src={videoEmAcao}
+              poster={videoEmAcaoPoster}
+              label="Envelopamento com estampa de chamas e caveira em um veículo off-road"
+            />
+          </Reveal>
         </div>
       </section>
 

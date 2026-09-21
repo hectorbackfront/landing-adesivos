@@ -113,6 +113,15 @@
   }
 }
 
+@keyframes drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.05) translate3d(-1.2%, -0.6%, 0);
+  }
+}
+
 /* Entrada suave do conteúdo. Atraso via --rise-delay. Desligada com prefers-reduced-motion. */
 @utility rise-in {
   @media (prefers-reduced-motion: no-preference) {
@@ -120,10 +129,12 @@
   }
 }
 
-/* Leve acomodação da imagem do hero (só transform, sem custo de layout). */
+/* Imagem do hero: acomoda ao carregar e depois respira num zoom lento (só transform). */
 @utility settle {
   @media (prefers-reduced-motion: no-preference) {
-    animation: settle 1.6s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+    animation:
+      settle 1.6s cubic-bezier(0.22, 0.7, 0.2, 1) both,
+      drift 28s ease-in-out 1.6s infinite alternate;
   }
 }
 

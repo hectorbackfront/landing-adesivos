@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Car,
   Building2,
@@ -29,9 +29,12 @@ import heroWrap from "@/assets/hero-wrap.jpg";
 import portEnvelopamento from "@/assets/port-envelopamento.jpg";
 import portFrota from "@/assets/port-frota.jpg";
 import portMoto from "@/assets/port-moto.jpg";
-import portFachada from "@/assets/port-fachada.jpg";
-import portPapel from "@/assets/port-papel.jpg";
-import portInsufilm from "@/assets/port-insufilm.jpg";
+import workAlfaLooks from "@/assets/work-alfalooks.webp";
+import workMyCar from "@/assets/work-mycar.webp";
+import workDivaFerrari from "@/assets/work-divaferrari.webp";
+import workCabideRosa from "@/assets/work-cabiderosa.webp";
+import workStudioKarol from "@/assets/work-studiokarol.webp";
+import workFernandes from "@/assets/work-fernandes.webp";
 
 const PHONE_DISPLAY = "(11) 93362-0802";
 const WHATS = "5511933620802";
@@ -91,13 +94,56 @@ const SERVICES = [
   },
 ];
 
+// Ordem pensada para equilibrar as colunas do masonry (2 e 3 colunas)
 const PORTFOLIO = [
-  { img: portEnvelopamento, title: "Troca de cor", tag: "Envelopamento", w: 1008, h: 1200 },
-  { img: portFrota, title: "Frota comercial", tag: "Envelopamento", w: 1008, h: 1200 },
-  { img: portMoto, title: "Moto esportiva", tag: "Envelopamento", w: 1008, h: 1200 },
-  { img: portFachada, title: "Fachada em ACM", tag: "Comunicação visual", w: 1008, h: 1200 },
-  { img: portPapel, title: "Papel de parede", tag: "Ambientes", w: 1008, h: 1200 },
-  { img: portInsufilm, title: "Insulfilm", tag: "Películas", w: 1008, h: 1200 },
+  {
+    img: workAlfaLooks,
+    title: "Alfa Look's",
+    tag: "Envelopamento de frota",
+    alt: "Baú de caminhão envelopado com a identidade visual da Alfa Look's",
+    w: 1200,
+    h: 675,
+  },
+  {
+    img: workMyCar,
+    title: "MyCar Autopeças",
+    tag: "Letras em relevo",
+    alt: "Fachada da MyCar Autopeças com letras em relevo iluminadas à noite",
+    w: 1080,
+    h: 1512,
+  },
+  {
+    img: workDivaFerrari,
+    title: "Diva Ferrari",
+    tag: "Papel de parede e adesivos",
+    alt: "Consultório odontológico infantil decorado com papel de parede e adesivos de ursinhos",
+    w: 1200,
+    h: 900,
+  },
+  {
+    img: workCabideRosa,
+    title: "Cabide Rosa",
+    tag: "Letras em relevo",
+    alt: "Fachada da loja Cabide Rosa com letras douradas iluminadas",
+    w: 1080,
+    h: 875,
+  },
+  {
+    img: workStudioKarol,
+    title: "Studio Karol",
+    tag: "Fachada luminosa",
+    alt: "Fachada do Studio Karol com letreiro e logotipo iluminados",
+    w: 1200,
+    h: 1600,
+  },
+  {
+    img: workFernandes,
+    title: "Fernandes Veículos",
+    tag: "Fachada e letreiro",
+    alt: "Fachada da Fernandes Veículos com letreiro e comunicação visual",
+    w: 1200,
+    h: 675,
+  },
 ];
 
 const STEPS = [
@@ -202,6 +248,58 @@ function WhatsButton({
     >
       {children}
     </a>
+  );
+}
+
+// Entrada suave ao rolar. Sem JS, sem IntersectionObserver ou com prefers-reduced-motion
+// o conteúdo simplesmente aparece; o que já está na tela ao carregar não é escondido.
+function Reveal({
+  as: Tag = "div",
+  delay = 0,
+  className,
+  children,
+}: {
+  as?: "div" | "li";
+  delay?: number;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
+
+    setHidden(true);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setHidden(false);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const Element = Tag as "div";
+  return (
+    <Element
+      ref={ref}
+      style={{ transitionDelay: hidden ? "0ms" : `${delay}ms` }}
+      className={clsx(
+        "transition-[opacity,transform] duration-700 ease-out",
+        hidden && "translate-y-6 opacity-0",
+        className,
+      )}
+    >
+      {children}
+    </Element>
   );
 }
 
@@ -570,30 +668,39 @@ function Index() {
               </h2>
             </div>
             <p className="max-w-md text-sm text-muted-foreground">
-              Imagens de referência dos serviços que aplicamos. Chame no WhatsApp
-              para ver fotos de trabalhos recentes.
+              Trabalhos reais entregues pela Buiu. Chame no WhatsApp para ver
+              mais projetos.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {PORTFOLIO.map((p) => (
-              <figure key={p.title} className="group relative overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  loading="lazy"
-                  width={p.w}
-                  height={p.h}
-                  className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-96"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                <figcaption className="absolute inset-x-0 bottom-0 border-l-4 border-primary p-5">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
-                    {p.tag}
-                  </p>
-                  <p className="display-title text-xl text-foreground">{p.title}</p>
-                </figcaption>
-              </figure>
+          <div className="mt-10 gap-4 sm:columns-2 lg:columns-3">
+            {PORTFOLIO.map((p, i) => (
+              <Reveal
+                key={p.title}
+                delay={(i % 3) * 90}
+                className="mb-4 break-inside-avoid"
+              >
+                <figure className="group relative overflow-hidden after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-500 hover:after:scale-x-100 motion-reduce:after:transition-none">
+                  <img
+                    src={p.img}
+                    alt={p.alt}
+                    loading="lazy"
+                    decoding="async"
+                    width={p.w}
+                    height={p.h}
+                    className="h-auto w-full transition-transform duration-700 ease-out motion-safe:group-hover:scale-105"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background/90 via-background/55 to-transparent" />
+                  <figcaption className="absolute inset-x-0 bottom-0 border-l-4 border-primary p-5 transition-transform duration-500 ease-out motion-safe:group-hover:-translate-y-1">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/85">
+                      {p.tag}
+                    </p>
+                    <p className="display-title text-xl text-foreground">
+                      {p.title}
+                    </p>
+                  </figcaption>
+                </figure>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -610,12 +717,18 @@ function Index() {
           </h2>
 
           <div className="mt-10 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {SERVICES.map((s) => (
-              <div key={s.title} className="bg-surface p-7 transition-colors hover:bg-accent">
-                <s.icon className="size-7 text-primary" />
-                <h3 className="display-title mt-5 text-xl text-foreground">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-              </div>
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.title} delay={(i % 4) * 80} className="bg-surface">
+                <div className="group h-full p-7 transition-colors hover:bg-accent">
+                  <s.icon className="size-7 text-primary transition-transform duration-300 motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:scale-110" />
+                  <h3 className="display-title mt-5 text-xl text-foreground">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {s.text}
+                  </p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -632,12 +745,19 @@ function Index() {
           </h2>
 
           <ol className="mt-10 grid gap-6 md:grid-cols-4">
-            {STEPS.map((s) => (
-              <li key={s.n} className="border-t-2 border-primary pt-5">
+            {STEPS.map((s, i) => (
+              <Reveal
+                as="li"
+                key={s.n}
+                delay={i * 110}
+                className="border-t-2 border-primary pt-5"
+              >
                 <p className="display-title text-4xl text-primary">{s.n}</p>
-                <p className="mt-3 font-bold uppercase tracking-wide text-foreground">{s.t}</p>
+                <p className="mt-3 font-bold uppercase tracking-wide text-foreground">
+                  {s.t}
+                </p>
                 <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>

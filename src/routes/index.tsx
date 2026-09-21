@@ -22,15 +22,13 @@ import {
   ArrowRight,
   Play,
   Pause,
+  Plus,
 } from "lucide-react";
 
 // clsx direto (e não cn/tailwind-merge) para não pesar o bundle da rota
 import clsx from "clsx";
 import logo from "@/assets/buiu-mark.png";
 import heroWrap from "@/assets/hero-wrap.jpg";
-import portEnvelopamento from "@/assets/port-envelopamento.jpg";
-import portFrota from "@/assets/port-frota.jpg";
-import portMoto from "@/assets/port-moto.jpg";
 import videoEmAcao from "@/assets/envelopamento-em-acao.mp4";
 import videoEmAcaoPoster from "@/assets/envelopamento-em-acao-poster.webp";
 import workAlfaLooks from "@/assets/work-alfalooks.webp";
@@ -157,6 +155,24 @@ const STEPS = [
   { n: "04", t: "Entrega revisada", d: "Conferência final de acabamento antes de você retirar." },
 ];
 
+const DIFERENCIAIS = [
+  {
+    icon: ShieldCheck,
+    t: "Proteção da pintura original",
+    d: "A película preserva o acabamento de fábrica do veículo.",
+  },
+  {
+    icon: Sparkles,
+    t: "Acabamento sem emendas visíveis",
+    d: "Recortes planejados e finalização revisada peça por peça.",
+  },
+  {
+    icon: Truck,
+    t: "Frotas padronizadas",
+    d: "Aplicação em série com a mesma identidade em todos os veículos.",
+  },
+];
+
 const HERO_AREAS = [
   ["Veículos", "Carros, motos e frotas"],
   ["Empresas", "Fachadas e identidade visual"],
@@ -241,9 +257,11 @@ function WhatsButton({
       target="_blank"
       rel="noopener noreferrer"
       className={clsx(
-        "inline-flex items-center justify-center gap-2 bg-primary font-bold uppercase tracking-widest text-primary-foreground",
+        "relative isolate overflow-hidden inline-flex items-center justify-center gap-2 bg-primary font-bold uppercase tracking-widest text-primary-foreground",
+        // brilho que atravessa o botão no hover, como uma película pegando a luz
+        "before:absolute before:inset-y-0 before:-left-1/2 before:-z-10 before:w-1/3 before:-skew-x-12 before:bg-primary-foreground/25 before:transition-transform before:duration-700 before:ease-out hover:before:translate-x-[420%] motion-reduce:before:hidden",
         size === "sm" ? "min-h-11 px-3.5 text-xs sm:px-5" : "px-6 py-4 text-sm",
-        "transition-[transform,background-color,box-shadow] duration-200 hover:bg-primary/90 hover:shadow-[0_12px_28px_-12px] hover:shadow-primary/70",
+        "transition-[translate,background-color,box-shadow] duration-200 hover:bg-primary/90 hover:shadow-[0_12px_28px_-12px] hover:shadow-primary/70",
         "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 active:bg-primary/80",
         FOCUS_RING,
         "[&_svg]:transition-transform [&_svg]:duration-200 motion-safe:hover:[&_svg]:-rotate-6 motion-safe:hover:[&_svg]:scale-110",
@@ -297,7 +315,7 @@ function Reveal({
       ref={ref}
       style={{ transitionDelay: hidden ? "0ms" : `${delay}ms` }}
       className={clsx(
-        "transition-[opacity,transform] duration-700 ease-out",
+        "transition-[opacity,translate] duration-700 ease-out",
         hidden && "translate-y-6 opacity-0",
         className,
       )}
@@ -385,9 +403,19 @@ function LoopVideo({
 function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+      // escreve direto no style para não re-renderizar a cada scroll
+      const bar = progressRef.current;
+      if (bar) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const done = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        bar.style.transform = `scaleX(${done})`;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -427,9 +455,15 @@ function SiteHeader() {
         <div
           className={clsx(
             "mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-[height] duration-300 sm:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-8 motion-reduce:transition-none",
+            "relative",
             scrolled ? "h-16" : "h-16 lg:h-[4.5rem]",
           )}
         >
+          <span
+            ref={progressRef}
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary"
+          />
           <a
             href="#top"
             onClick={() => setOpen(false)}
@@ -490,13 +524,13 @@ function SiteHeader() {
             >
               <Menu
                 className={clsx(
-                  "absolute size-5 transition-[opacity,transform] duration-200 motion-reduce:transition-none",
+                  "absolute size-5 transition-[opacity,rotate] duration-200 motion-reduce:transition-none",
                   open && "rotate-90 opacity-0",
                 )}
               />
               <X
                 className={clsx(
-                  "absolute size-5 transition-[opacity,transform] duration-200 motion-reduce:transition-none",
+                  "absolute size-5 transition-[opacity,rotate] duration-200 motion-reduce:transition-none",
                   !open && "-rotate-90 opacity-0",
                 )}
               />
@@ -524,7 +558,7 @@ function SiteHeader() {
                   onClick={() => setOpen(false)}
                   style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms" }}
                   className={clsx(
-                    "flex min-h-14 items-center justify-between border-b border-border text-sm font-semibold uppercase tracking-[0.2em] text-foreground transition-[opacity,transform,color] duration-300 last:border-b-0 active:text-primary motion-reduce:transition-none",
+                    "flex min-h-14 items-center justify-between border-b border-border text-sm font-semibold uppercase tracking-[0.2em] text-foreground transition-[opacity,translate,color] duration-300 last:border-b-0 active:text-primary motion-reduce:transition-none",
                     open
                       ? "translate-y-0 opacity-100"
                       : "-translate-y-1 opacity-0",
@@ -616,7 +650,7 @@ function Hero() {
             href="#portfolio"
             className={clsx(
               "group inline-flex min-h-[3.25rem] w-full items-center justify-center gap-2 border border-foreground/25 bg-background/30 px-6 py-4 text-sm font-bold uppercase tracking-widest text-foreground backdrop-blur-sm sm:w-auto",
-              "transition-[transform,background-color,border-color] duration-200 hover:border-foreground/60 hover:bg-foreground/10 active:bg-foreground/15",
+              "transition-[translate,background-color,border-color] duration-200 hover:border-foreground/60 hover:bg-foreground/10 active:bg-foreground/15",
               "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0",
               FOCUS_RING,
             )}
@@ -658,10 +692,28 @@ function Index() {
 
       <Hero />
 
+      {/* Faixa de serviços em movimento (decorativa: a lista real está em #servicos) */}
+      <div
+        aria-hidden="true"
+        className="group overflow-hidden border-y border-border bg-surface/60 py-3.5"
+      >
+        <div className="marquee-track flex w-max motion-safe:group-hover:[animation-play-state:paused]">
+          {[...SERVICES, ...SERVICES, ...SERVICES, ...SERVICES].map((s, i) => (
+            <span
+              key={i}
+              className="flex items-center gap-6 whitespace-nowrap px-6 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground"
+            >
+              {s.title}
+              <span className="text-primary">/</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Envelopamento */}
       <section id="envelopamento" className="bg-surface py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
-          <div>
+        <div className="mx-auto max-w-7xl px-5">
+          <Reveal className="max-w-3xl">
             <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-primary">
               Nossa especialidade
             </span>
@@ -671,66 +723,42 @@ function Index() {
             <p className="mt-5 text-muted-foreground md:text-lg">
               Trabalhamos com troca de cor completa, envelopamento parcial,
               detalhes em preto fosco, teto, capô e comunicação visual de frota.
-              A preparação da superfície é a parte mais importante do serviço — e
-              é onde não abrimos mão do cuidado.
+              A preparação da superfície é a parte mais importante do serviço —
+              e é onde não abrimos mão do cuidado.
             </p>
+          </Reveal>
 
-            <ul className="mt-8 space-y-4">
-              {[
-                [ShieldCheck, "Proteção da pintura original", "A película preserva o acabamento de fábrica do veículo."],
-                [Sparkles, "Acabamento sem emendas visíveis", "Recortes planejados e finalização revisada peça por peça."],
-                [Truck, "Frotas padronizadas", "Aplicação em série com a mesma identidade em todos os veículos."],
-              ].map(([Icon, t, d]) => {
-                const I = Icon as typeof ShieldCheck;
-                return (
-                  <li key={t as string} className="flex gap-4">
-                    <span className="mt-0.5 inline-flex size-10 shrink-0 items-center justify-center bg-primary/15 text-primary">
-                      <I className="size-5" />
-                    </span>
-                    <div>
-                      <p className="font-bold uppercase tracking-wide text-foreground">{t as string}</p>
-                      <p className="text-sm text-muted-foreground">{d as string}</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+          <ul className="mt-10 grid gap-4 md:grid-cols-3">
+            {DIFERENCIAIS.map((item, i) => (
+              <Reveal as="li" key={item.t} delay={i * 90} className="group">
+                <div className="relative h-full border border-border bg-background p-7 transition-colors duration-300 hover:border-primary/40">
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-500 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+                  />
+                  <span className="inline-flex size-11 items-center justify-center bg-primary/15 text-primary transition-transform duration-300 motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:scale-110">
+                    <item.icon className="size-5" />
+                  </span>
+                  <p className="mt-5 font-bold uppercase tracking-wide text-foreground">
+                    {item.t}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.d}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
 
+          <Reveal delay={120}>
             <WhatsButton
-              className="mt-9"
+              className="mt-10"
               msg="Olá! Quero envelopar meu veículo. Pode me passar o orçamento?"
             >
               <MessageCircle className="size-5" />
               Quero envelopar meu veículo
             </WhatsButton>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <img
-              src={portEnvelopamento}
-              alt="Película sendo aplicada no capô de um carro"
-              loading="lazy"
-              width={1008}
-              height={1200}
-              className="col-span-2 h-64 w-full object-cover md:h-80"
-            />
-            <img
-              src={portMoto}
-              alt="Moto esportiva envelopada em preto e vermelho"
-              loading="lazy"
-              width={1008}
-              height={1200}
-              className="h-52 w-full object-cover md:h-64"
-            />
-            <img
-              src={portFrota}
-              alt="Van branca preparada para envelopamento de frota"
-              loading="lazy"
-              width={1008}
-              height={1200}
-              className="h-52 w-full object-cover md:h-64"
-            />
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -884,15 +912,39 @@ function Index() {
             {FAQ.map((f, i) => (
               <div key={f.q}>
                 <button
+                  type="button"
                   onClick={() => setFaq(faq === i ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                  aria-expanded={faq === i}
+                  className={clsx(
+                    "group flex w-full items-center justify-between gap-4 py-5 text-left",
+                    FOCUS_RING,
+                  )}
                 >
-                  <span className="font-bold uppercase tracking-wide text-foreground">{f.q}</span>
-                  <span className="text-primary">{faq === i ? "−" : "+"}</span>
+                  <span className="font-bold uppercase tracking-wide text-foreground transition-colors duration-200 group-hover:text-primary">
+                    {f.q}
+                  </span>
+                  <Plus
+                    aria-hidden="true"
+                    className={clsx(
+                      "size-5 shrink-0 text-primary transition-transform duration-300 ease-out motion-reduce:transition-none",
+                      faq === i && "rotate-45",
+                    )}
+                  />
                 </button>
-                {faq === i && (
-                  <p className="pb-5 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
-                )}
+                <div
+                  className={clsx(
+                    "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none",
+                    faq === i
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0",
+                  )}
+                >
+                  <div className="overflow-hidden">
+                    <p className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                      {f.a}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -998,8 +1050,16 @@ function Index() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar no WhatsApp"
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-whats px-5 py-4 font-bold uppercase tracking-widest text-background shadow-lg transition-transform hover:scale-105"
+        className={clsx(
+          "fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-whats px-5 py-4 font-bold uppercase tracking-widest text-background shadow-lg",
+          "transition-transform duration-200 motion-safe:hover:scale-105 motion-safe:active:scale-100",
+          FOCUS_RING,
+        )}
       >
+        <span
+          aria-hidden="true"
+          className="pulse-ring absolute inset-0 -z-10 rounded-full bg-whats"
+        />
         <MessageCircle className="size-6" />
         <span className="hidden text-xs sm:inline">WhatsApp</span>
       </a>

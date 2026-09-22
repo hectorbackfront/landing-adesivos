@@ -1,0 +1,19 @@
+# dependências e builds
+node_modules/
+.output/
+.vinxi/
+.tanstack/
+.wrangler/
+.vercel/
+.nitro/
+dist/
+
+# gerado automaticamente pelo TanStack Router no build
+src/routeTree.gen.ts
+
+# sistema / editor
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example

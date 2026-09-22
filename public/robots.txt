@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://buiu-adesivos.vercel.app/sitemap.xml

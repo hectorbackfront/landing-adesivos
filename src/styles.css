@@ -4,6 +4,59 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ------------------------------------------------------------------ */
+/* Fontes self-hosted (sem Google Fonts: carrega mais rápido)          */
+/* ------------------------------------------------------------------ */
+@font-face {
+  font-family: "Anton";
+  src: url("./assets/fonts/anton-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("./assets/fonts/barlow-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("./assets/fonts/barlow-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("./assets/fonts/barlow-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("./assets/fonts/barlow-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("./assets/fonts/barlow-condensed-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("./assets/fonts/barlow-condensed-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -33,41 +86,47 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-steel: var(--steel);
+  --color-red-text: var(--red-text);
   --color-whats: var(--whats);
-  --font-display: "Anton", system-ui, sans-serif;
-  --font-sans: "Barlow", system-ui, sans-serif;
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-cond:
+    "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.22, 0.7, 0.2, 1);
 }
 
 :root {
-  --radius: 0.25rem;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --surface: oklch(0.205 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.55 0.23 27.5);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.26 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.26 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.3 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --radius: 0.375rem;
+  --background: oklch(0.135 0.003 285);
+  --foreground: oklch(0.975 0.002 285);
+  --surface: oklch(0.172 0.004 285);
+  --surface-2: oklch(0.212 0.005 285);
+  --card: oklch(0.172 0.004 285);
+  --card-foreground: oklch(0.975 0.002 285);
+  --popover: oklch(0.172 0.004 285);
+  --popover-foreground: oklch(0.975 0.002 285);
+  /* vermelho da marca (logo) */
+  --primary: oklch(0.565 0.228 27.5);
+  --primary-foreground: oklch(0.995 0 0);
+  /* vermelho mais claro, só para texto pequeno sobre fundo escuro (contraste AA) */
+  --red-text: oklch(0.68 0.2 25);
+  --secondary: oklch(0.24 0.005 285);
+  --secondary-foreground: oklch(0.975 0.002 285);
+  --muted: oklch(0.24 0.005 285);
+  --muted-foreground: oklch(0.74 0.01 285);
+  --accent: oklch(0.27 0.006 285);
+  --accent-foreground: oklch(0.975 0.002 285);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.55 0.23 27.5);
-  --steel: oklch(0.78 0.01 250);
-  --whats: oklch(0.68 0.17 150);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.68 0.2 25);
+  --steel: oklch(0.84 0.012 255);
+  --whats: oklch(0.6 0.155 150);
+  color-scheme: dark;
 }
 
 @layer base {
@@ -75,15 +134,12 @@
     border-color: var(--color-border);
   }
 
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-  }
-
   html {
     /* Altura do header fixo: âncoras não ficam escondidas atrás dele */
-    scroll-padding-top: 4rem;
+    scroll-padding-top: 4.5rem;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+    scrollbar-color: oklch(0.35 0.005 285) var(--background);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -91,12 +147,135 @@
       scroll-behavior: smooth;
     }
   }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  html.is-locked {
+    overflow: hidden;
+  }
 }
 
-@keyframes rise-in {
+/* ------------------------------------------------------------------ */
+/* Tipografia                                                          */
+/* ------------------------------------------------------------------ */
+@utility display-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+@utility eyebrow {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.26em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+@utility label-cond {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Letras cromadas, como o prata do logo */
+@utility text-chrome {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #dfe2e8 34%,
+    #8d939c 50%,
+    #eef0f4 66%,
+    #aeb3bb 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Contorno vazado (números gigantes, textos de fundo) */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(1 0 0 / 0.22);
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Textura de granulado (filme), aplicada via pseudo-elemento */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Faixas diagonais (listras de "fita") */
+@utility stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    oklch(1 0 0 / 0.07) 0 10px,
+    transparent 10px 22px
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Animações                                                           */
+/* ------------------------------------------------------------------ */
+@keyframes line-up {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translate3d(0, 1rem, 0);
   }
   to {
     opacity: 1;
@@ -104,12 +283,30 @@
   }
 }
 
+@keyframes sheen {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -30% 0;
+  }
+}
+
 @keyframes settle {
   from {
-    transform: scale(1.06);
+    transform: scale(1.08);
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.05) translate3d(-1.2%, -0.6%, 0);
   }
 }
 
@@ -125,61 +322,381 @@
 @keyframes pulse-ring {
   0% {
     transform: scale(1);
-    opacity: 0.4;
+    opacity: 0.45;
   }
   70%,
   100% {
-    transform: scale(1.6);
+    transform: scale(1.55);
     opacity: 0;
   }
 }
 
-@keyframes drift {
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes toast-in {
   from {
-    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0;
+    transform: translate3d(-50%, 1rem, 0);
   }
   to {
-    transform: scale(1.05) translate3d(-1.2%, -0.6%, 0);
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-/* Entrada suave do conteúdo. Atraso via --rise-delay. Desligada com prefers-reduced-motion. */
-@utility rise-in {
+/* Headline: cada linha sobe de dentro de uma máscara */
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  /* folga para acentos (Í, Ã) e cedilha não serem cortados pela máscara */
+  padding-block: 0.16em 0.06em;
+  margin-block: -0.16em -0.06em;
+}
+
+@utility line-inner {
+  display: block;
   @media (prefers-reduced-motion: no-preference) {
-    animation: rise-in 0.7s cubic-bezier(0.22, 0.7, 0.2, 1) var(--rise-delay, 0ms) both;
+    animation: line-up 0.95s var(--ease-out-expo) var(--d, 0ms) both;
   }
 }
 
-/* Imagem do hero: acomoda ao carregar e depois respira num zoom lento (só transform). */
+@utility fade-up {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: fade-up 0.8s var(--ease-snap) var(--d, 0ms) both;
+  }
+}
+
+/* Brilho que atravessa o texto vermelho, como película pegando a luz */
+@utility text-sheen {
+  background-image: linear-gradient(
+    100deg,
+    var(--primary) 0%,
+    var(--primary) 42%,
+    oklch(0.82 0.12 25) 50%,
+    var(--primary) 58%,
+    var(--primary) 100%
+  );
+  background-size: 260% 100%;
+  background-position: -30% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: sheen 1.6s var(--ease-snap) 1.15s both;
+  }
+}
+
 @utility settle {
   @media (prefers-reduced-motion: no-preference) {
     animation:
-      settle 1.6s cubic-bezier(0.22, 0.7, 0.2, 1) both,
-      drift 28s ease-in-out 1.6s infinite alternate;
+      settle 1.8s var(--ease-snap) both,
+      drift 28s ease-in-out 1.8s infinite alternate;
   }
 }
 
-/* Faixa de serviços em movimento contínuo. Parada com prefers-reduced-motion. */
 @utility marquee-track {
   @media (prefers-reduced-motion: no-preference) {
-    animation: marquee 45s linear infinite;
+    animation: marquee var(--marquee-duration, 40s) linear infinite
+      var(--marquee-direction, normal);
   }
 }
 
-/* Halo discreto no botão flutuante do WhatsApp. */
+@utility marquee-reverse {
+  --marquee-direction: reverse;
+}
+
 @utility pulse-ring {
   @media (prefers-reduced-motion: no-preference) {
-    animation: pulse-ring 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation: pulse-ring 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 }
 
-@utility display-title {
-  font-family: var(--font-display);
-  letter-spacing: 0.01em;
-  line-height: 0.95;
-  text-transform: uppercase;
+@utility scroll-cue {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: scroll-cue 2.2s var(--ease-snap) infinite;
+  }
 }
 
-@utility diag-cut {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 3vw));
+/* Paralaxe suave do hero (só em navegadores com scroll-driven animations) */
+@keyframes hero-parallax {
+  to {
+    transform: translate3d(0, 18%, 0);
+  }
+}
+@utility hero-parallax {
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: hero-parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrada ao rolar: o JS só esconde o que está abaixo da dobra.       */
+/* Sem JS (ou com movimento reduzido) tudo aparece normalmente.        */
+/* ------------------------------------------------------------------ */
+[data-reveal] {
+  transition:
+    opacity 0.9s var(--ease-snap),
+    translate 0.9s var(--ease-snap);
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal="out"] {
+  opacity: 0;
+  translate: 0 1.75rem;
+}
+/* Processo: a linha se preenche e os passos entram em sequência */
+.process[data-reveal="out"] {
+  opacity: 1;
+  translate: none;
+}
+.process .process-fill {
+  transition: scale 1.8s var(--ease-snap) 0.15s;
+}
+.process[data-reveal="out"] .process-fill {
+  scale: 1 0;
+}
+.process .process-step {
+  transition:
+    opacity 0.8s var(--ease-snap),
+    translate 0.8s var(--ease-snap);
+  transition-delay: var(--d, 0ms);
+}
+.process[data-reveal="out"] .process-step {
+  opacity: 0;
+  translate: 0 1rem;
+}
+@media (width >= 64rem) {
+  .process[data-reveal="out"] .process-fill {
+    scale: 0 1;
+  }
+}
+
+/* no carrossel do celular os cards entram juntos com a seção */
+@media (width < 40rem) {
+  .work-grid > [data-reveal="out"] {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Cartela de acabamentos (película "pegando a luz")                   */
+/* ------------------------------------------------------------------ */
+@property --mx {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 32%;
+}
+@property --my {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 22%;
+}
+
+.finish {
+  position: relative;
+  overflow: hidden;
+  transition:
+    --mx 0.7s var(--ease-snap),
+    --my 0.7s var(--ease-snap);
+}
+.finish.is-tracking {
+  transition: none;
+}
+/* amostra selecionada "respira" a luz sozinha (útil no celular, sem mouse) */
+@keyframes spec-drift {
+  0%,
+  100% {
+    --mx: 22%;
+    --my: 16%;
+  }
+  50% {
+    --mx: 80%;
+    --my: 72%;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [aria-checked="true"] > .finish:not(.is-tracking) {
+    animation: spec-drift 6s ease-in-out infinite;
+  }
+}
+.finish::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx) var(--my),
+    oklch(1 0 0 / var(--spec-a, 0.35)) 0%,
+    oklch(1 0 0 / calc(var(--spec-a, 0.35) * 0.35))
+      calc(var(--spec-r, 30%) * 0.45),
+    transparent var(--spec-r, 30%)
+  );
+  mix-blend-mode: screen;
+}
+.finish::before {
+  /* reflexo fixo em faixa, dá volume de "chapa" */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    oklch(1 0 0 / var(--band-a, 0.12)) 44%,
+    transparent 58%
+  );
+  z-index: 1;
+}
+
+.finish-fosco {
+  background:
+    radial-gradient(120% 90% at 20% 0%, oklch(0.3 0.004 285), transparent 60%),
+    oklch(0.19 0.004 285);
+  --spec-a: 0.13;
+  --spec-r: 75%;
+  --band-a: 0.03;
+}
+.finish-brilho {
+  background: linear-gradient(
+    160deg,
+    oklch(0.62 0.235 27),
+    oklch(0.38 0.16 27)
+  );
+  --spec-a: 0.85;
+  --spec-r: 26%;
+  --band-a: 0.28;
+}
+.finish-cetim {
+  background: linear-gradient(
+    160deg,
+    oklch(0.47 0.008 260),
+    oklch(0.26 0.006 260)
+  );
+  --spec-a: 0.38;
+  --spec-r: 55%;
+  --band-a: 0.1;
+}
+.finish-metalico {
+  background:
+    radial-gradient(oklch(1 0 0 / 0.5) 0.6px, transparent 1px) 0 0 / 5px 5px,
+    radial-gradient(oklch(1 0 0 / 0.35) 0.6px, transparent 1px) 2px 3px / 7px
+      7px,
+    linear-gradient(160deg, oklch(0.86 0.008 255), oklch(0.5 0.01 255));
+  --spec-a: 0.75;
+  --spec-r: 34%;
+  --band-a: 0.3;
+}
+.finish-carbono {
+  background:
+    linear-gradient(27deg, #141414 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #141414 5px, transparent 5px) 10px 0,
+    linear-gradient(27deg, #262626 5px, transparent 5px) 0 10px,
+    linear-gradient(207deg, #262626 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #1c1c1c 10px, transparent 10px),
+    linear-gradient(
+      #1d1d1d 25%,
+      #1a1a1a 25%,
+      #1a1a1a 50%,
+      transparent 50%,
+      transparent 75%,
+      #292929 75%,
+      #292929
+    );
+  background-color: #151515;
+  background-size: 20px 20px;
+  --spec-a: 0.5;
+  --spec-r: 32%;
+  --band-a: 0.16;
+}
+.finish-impresso {
+  background-color: oklch(0.35 0.12 45);
+  background-size: cover;
+  background-position: center;
+  --spec-a: 0.55;
+  --spec-r: 30%;
+  --band-a: 0.2;
+}
+
+/* ------------------------------------------------------------------ */
+/* Lightbox (dialog nativo)                                            */
+/* ------------------------------------------------------------------ */
+dialog.lightbox {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: oklch(0.11 0.003 285 / 0.97);
+  color: var(--foreground);
+  opacity: 1;
+  transition:
+    opacity 0.3s var(--ease-snap),
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+dialog.lightbox:not([open]) {
+  opacity: 0;
+}
+@starting-style {
+  dialog.lightbox[open] {
+    opacity: 0;
+  }
+}
+dialog.lightbox::backdrop {
+  background: transparent;
+}
+
+/* Toast */
+@utility toast-in {
+  animation: toast-in 0.35s var(--ease-snap) both;
+}
+
+/* FAQ nativo com abertura animada onde houver suporte */
+details.faq-item {
+  interpolate-size: allow-keywords;
+}
+details.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.35s var(--ease-snap),
+    content-visibility 0.35s allow-discrete;
+}
+details.faq-item[open]::details-content {
+  block-size: auto;
+}
+details.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Recorta sem virar área rolável (o foco/scrollIntoView não "arrasta" o conteúdo) */
+@utility clip-box {
+  overflow: hidden;
+  overflow: clip;
+}
+@utility clip-x {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Scrollbar escondida no carrossel mobile */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

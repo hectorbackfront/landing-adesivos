@@ -1,30 +1,45 @@
-# Welcome to your Lovable project
+# Buiu Adesivos — site
 
-This project was built with [Lovable](https://lovable.dev).
+Landing page da **Buiu Adesivos** (envelopamento e comunicação visual).
+No ar em https://buiu-adesivos.vercel.app
 
-## Build with Lovable
+## Onde editar
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+| O quê                                                | Arquivo                                             |
+| ---------------------------------------------------- | --------------------------------------------------- |
+| Telefone, WhatsApp, Instagram, endereço do site      | `src/components/site/data.ts` (topo do arquivo)     |
+| Textos de serviços, portfólio, processo e FAQ        | `src/components/site/data.ts`                       |
+| Layout de cada seção                                 | `src/components/site/*.tsx` (uma seção por arquivo) |
+| Cores, fontes e animações                            | `src/styles.css`                                    |
+| Imagem que aparece ao compartilhar o link (WhatsApp) | `public/og-image.jpg` (1200 × 630)                  |
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+### Colocar um trabalho novo no portfólio
 
-## Development
+1. Salve a foto em `src/assets/works/` com um nome simples, ex.: `padaria-central.jpg`
+   (ou gere versões otimizadas `padaria-central-480.webp`, `-800.webp`… como as que já estão lá).
+2. Em `src/components/site/data.ts`, adicione um item na lista `WORKS` com `image: "padaria-central"`,
+   título, categoria (`tag`), descrição e o tamanho original da foto (`w` e `h`).
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+### Trocar o domínio
+
+Se o site ganhar domínio próprio, troque `SITE_URL` em `src/components/site/data.ts`
+e o endereço em `public/sitemap.xml` e `public/robots.txt`.
+
+## Rodar localmente
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install   # ou npm i
+bun run dev   # ou npm run dev
 ```
 
-## Built with
+## Feito com
 
-- TanStack Start
+- TanStack Start + React
 - TypeScript
-- React
 - Tailwind CSS
-# landing-adesivos
+- Fontes self-hosted (Anton, Barlow, Barlow Condensed)
+
+---
+
+Projeto conectado ao [Lovable](https://lovable.dev): alterações feitas lá entram direto neste repositório
+e vice-versa.

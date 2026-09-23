@@ -11,7 +11,7 @@ export function Process() {
     >
       <div className="container-site">
         <SectionIntro
-          num="05"
+          num="06"
           eyebrow="Como funciona"
           id="processo-title"
           title="Do primeiro contato à entrega"

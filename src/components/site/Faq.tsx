@@ -13,7 +13,7 @@ export function Faq() {
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <SectionIntro
-              num="07"
+              num="08"
               eyebrow="Dúvidas"
               id="duvidas-title"
               title="Perguntas frequentes"

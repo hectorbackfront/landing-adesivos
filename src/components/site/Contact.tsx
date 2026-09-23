@@ -52,7 +52,7 @@ export function Contact() {
         <div className="lg:col-span-7" data-reveal="">
           <p className="eyebrow flex items-center gap-3 text-red-text">
             <span className="font-display text-base tracking-normal text-foreground">
-              08
+              09
             </span>
             <span aria-hidden="true" className="h-px w-8 bg-primary" />
             Contato

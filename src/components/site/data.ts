@@ -9,6 +9,7 @@ import {
   PanelTop,
   Ruler,
   ShieldCheck,
+  Signpost,
   Sparkles,
   Sticker,
   Sun,
@@ -58,7 +59,7 @@ export const HERO_AREAS = [
     icon: Building2,
     title: "Empresas",
     text: "Fachadas e identidade visual",
-    href: "#servicos",
+    href: "#fachadas",
   },
   {
     icon: Wallpaper,
@@ -299,8 +300,9 @@ export const WORKS: Work[] = [
 /* Serviços                                                            */
 /* ------------------------------------------------------------------ */
 export type ServiceId =
-  | "envelopamento"
+  | "sinalizacao"
   | "fachada-acm"
+  | "envelopamento"
   | "letras-relevo"
   | "adesivos"
   | "papel-parede"
@@ -315,16 +317,22 @@ export const SERVICES: {
   text: string;
 }[] = [
   {
-    id: "envelopamento",
-    icon: Car,
-    title: "Envelopamento",
-    text: "Troca de cor, detalhes e envelopamento comercial de carros, motos e frotas.",
+    id: "sinalizacao",
+    icon: Signpost,
+    title: "Sinalização comercial e industrial",
+    text: "Identificação e orientação para lojas, empresas e indústrias, com acabamento resistente e leitura clara.",
   },
   {
     id: "fachada-acm",
     icon: Building2,
     title: "Fachadas em ACM",
     text: "Fachadas modernas em ACM com estrutura, instalação e acabamento premium.",
+  },
+  {
+    id: "envelopamento",
+    icon: Car,
+    title: "Envelopamento",
+    text: "Troca de cor, detalhes e envelopamento comercial de carros, motos e frotas.",
   },
   {
     id: "letras-relevo",
@@ -420,8 +428,9 @@ export const EMPTY_QUOTE: QuoteState = {
 };
 
 export const QUOTE_SERVICES: { id: QuoteServiceId; label: string }[] = [
-  { id: "envelopamento", label: "Envelopamento de veículo" },
+  { id: "sinalizacao", label: "Sinalização comercial e industrial" },
   { id: "fachada-acm", label: "Fachada em ACM" },
+  { id: "envelopamento", label: "Envelopamento de veículo" },
   { id: "letras-relevo", label: "Letras em relevo" },
   { id: "adesivos", label: "Adesivos" },
   { id: "papel-parede", label: "Papel de parede" },
@@ -512,7 +521,7 @@ export const FAQ = [
   },
   {
     q: "Fazem fachada e letreiro?",
-    a: "Sim. Fazemos fachadas em ACM, letras em relevo (com ou sem iluminação), placas e toldos, com estrutura e instalação.",
+    a: "Sim. Fazemos fachadas em ACM, letras em relevo (com ou sem iluminação), placas e toldos e sinalização comercial e industrial, com estrutura e instalação.",
   },
   {
     q: "Quais cidades vocês atendem?",

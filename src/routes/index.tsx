@@ -14,6 +14,7 @@ import {
   WORKS,
   type QuoteState,
 } from "@/components/site/data";
+import { Facades } from "@/components/site/Facades";
 import { Faq } from "@/components/site/Faq";
 import { FloatingWhats, Toast } from "@/components/site/Floating";
 import { Footer } from "@/components/site/Footer";
@@ -138,6 +139,7 @@ function Index() {
           <Portfolio />
           <Showcase />
           <Services />
+          <Facades />
           <Process />
           <Quote state={quote} setState={setQuote} />
           <Faq />

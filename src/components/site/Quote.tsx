@@ -47,7 +47,7 @@ export function Quote({
       <div className="container-site relative grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
           <SectionIntro
-            num="06"
+            num="07"
             eyebrow="Orçamento"
             id="orcamento-title"
             title="Monte seu orçamento em 1 minuto"

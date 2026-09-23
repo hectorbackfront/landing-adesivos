@@ -38,6 +38,7 @@ export const wa = (msg: string) =>
 export const pad = (n: number) => String(n).padStart(2, "0");
 
 export const NAV = [
+  { id: "fachadas", label: "Sinalização" },
   { id: "envelopamento", label: "Envelopamento" },
   { id: "portfolio", label: "Portfólio" },
   { id: "servicos", label: "Serviços" },
@@ -49,6 +50,12 @@ export const NAV = [
 /* Hero                                                                */
 /* ------------------------------------------------------------------ */
 export const HERO_AREAS = [
+  {
+    icon: Signpost,
+    title: "Sinalização",
+    text: "Comercial e industrial",
+    href: "#fachadas",
+  },
   {
     icon: Car,
     title: "Veículos",

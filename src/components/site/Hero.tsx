@@ -84,8 +84,9 @@ export function Hero() {
               style={d(450)}
               className="fade-up mt-6 max-w-xl text-base leading-relaxed text-foreground/80 [text-shadow:0_1px_16px_rgb(0_0_0/0.8)] md:text-lg"
             >
-              Envelopamento de carros, motos e frotas, fachadas em ACM, letras
-              em relevo e adesivos — com acabamento de quem é especialista.
+              Sinalização comercial e industrial, fachadas em ACM, envelopamento
+              de carros, motos e frotas, letras em relevo e adesivos — com
+              acabamento de quem é especialista.
             </p>
 
             <div
@@ -135,7 +136,7 @@ export function Hero() {
 
         <div
           style={d(760)}
-          className="fade-up mt-10 grid grid-cols-3 border-t border-white/12 md:mt-14 lg:grid-cols-[1fr_1fr_1fr_auto]"
+          className="fade-up mt-10 grid grid-cols-2 border-t border-white/12 sm:grid-cols-4 md:mt-14 lg:grid-cols-[1fr_1fr_1fr_1fr_auto]"
         >
           {HERO_AREAS.map((a, i) => (
             <a
@@ -143,7 +144,10 @@ export function Hero() {
               href={a.href}
               className={cx(
                 "group relative pb-1 pt-4 pr-3 md:pt-5",
-                i > 0 && "pl-3 md:pl-6",
+                i % 2 === 1 && "pl-3",
+                i > 0 && "sm:pl-3 md:pl-6",
+                // 2ª fileira no celular (grade 2×2) ganha a própria linha
+                "max-sm:nth-[n+3]:mt-3 max-sm:nth-[n+3]:border-t max-sm:nth-[n+3]:border-white/12",
               )}
             >
               <span

@@ -54,18 +54,19 @@ export function Hero() {
             <a
               href="#fachadas"
               style={d(0)}
-              className="fade-up group/tag inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-full border border-primary/60 bg-primary/15 py-2 pl-4 pr-3 label-cond text-[0.78rem] tracking-[0.16em] text-foreground backdrop-blur-md transition-colors hover:bg-primary/25 sm:text-sm"
+              className="fade-up group/tag relative inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-full bg-primary py-2.5 pl-4 pr-4 label-cond text-[0.85rem] font-bold tracking-[0.14em] text-primary-foreground shadow-[0_16px_40px_-14px] shadow-primary/80 transition-[translate,box-shadow] duration-300 motion-safe:hover:-translate-y-0.5 sm:py-3 sm:pl-5 sm:text-base"
             >
-              <Building2
+              <span
                 aria-hidden="true"
-                className="size-4 shrink-0 text-red-text"
+                className="absolute inset-0 -z-10 rounded-full bg-primary blur-md motion-safe:animate-pulse"
               />
+              <Building2 aria-hidden="true" className="size-5 shrink-0" />
               <span>Fachadas e revestimento em ACM</span>
-              <span className="hidden text-foreground/40 sm:inline">•</span>
-              <span className="text-steel">Piracaia e região</span>
+              <span className="hidden opacity-60 sm:inline">•</span>
+              <span className="hidden sm:inline">Piracaia e região</span>
               <ArrowRight
                 aria-hidden="true"
-                className="size-4 shrink-0 text-red-text transition-transform duration-300 motion-safe:group-hover/tag:translate-x-1"
+                className="size-4 shrink-0 transition-transform duration-300 motion-safe:group-hover/tag:translate-x-1"
               />
             </a>
 

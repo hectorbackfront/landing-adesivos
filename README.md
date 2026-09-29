@@ -1,7 +1,7 @@
 # Buiu Adesivos — site
 
 Landing page da **Buiu Adesivos** (envelopamento e comunicação visual).
-No ar em https://buiu-adesivos.vercel.app
+No ar em https://buiuadesivos.com.br
 
 ## Onde editar
 

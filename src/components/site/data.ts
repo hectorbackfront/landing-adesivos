@@ -24,13 +24,13 @@ import {
 /* ------------------------------------------------------------------ */
 /* Contato                                                             */
 /* ------------------------------------------------------------------ */
-export const SITE_URL = "https://buiu-adesivos.vercel.app";
+export const SITE_URL = "https://buiuadesivos.com.br";
 export const BRAND = "Buiu Adesivos";
 export const PHONE_DISPLAY = "(11) 93362-0802";
 export const WHATS = "5511933620802";
 export const INSTAGRAM = "buiuadesivos";
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM}/`;
-export const AREA = "São Paulo e região";
+export const AREA = "Piracaia e região";
 
 export const wa = (msg: string) =>
   `https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}`;
@@ -38,7 +38,7 @@ export const wa = (msg: string) =>
 export const pad = (n: number) => String(n).padStart(2, "0");
 
 export const NAV = [
-  { id: "fachadas", label: "Sinalização" },
+  { id: "fachadas", label: "Fachadas ACM" },
   { id: "envelopamento", label: "Envelopamento" },
   { id: "portfolio", label: "Portfólio" },
   { id: "servicos", label: "Serviços" },
@@ -332,8 +332,8 @@ export const SERVICES: {
   {
     id: "fachada-acm",
     icon: Building2,
-    title: "Fachadas em ACM",
-    text: "Fachadas modernas em ACM com estrutura, instalação e acabamento premium.",
+    title: "Fachadas e revestimento em ACM",
+    text: "Fachadas e revestimento em ACM com estrutura, instalação e acabamento premium.",
   },
   {
     id: "envelopamento",
@@ -528,7 +528,7 @@ export const FAQ = [
   },
   {
     q: "Fazem fachada e letreiro?",
-    a: "Sim. Fazemos fachadas em ACM, letras em relevo (com ou sem iluminação), placas e toldos e sinalização comercial e industrial, com estrutura e instalação.",
+    a: "Sim. Fazemos fachadas e revestimento em ACM, letras em relevo (com ou sem iluminação), placas e toldos e sinalização comercial e industrial, com estrutura e instalação.",
   },
   {
     q: "Quais cidades vocês atendem?",

@@ -1,5 +1,5 @@
 import { useRef, useState, type CSSProperties } from "react";
-import { ArrowRight, Check, Play } from "lucide-react";
+import { ArrowRight, Building2, Check, Play } from "lucide-react";
 import { HERO_AREAS, HERO_PROOF } from "./data";
 import { useSite } from "./context";
 import { HERO_DESKTOP, HERO_MOBILE, UTV_POSTER, UTV_VIDEO } from "./media";
@@ -51,13 +51,23 @@ export function Hero() {
       <div className="container-site relative z-10 pb-8 md:pb-10">
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
           <div>
-            <p
+            <a
+              href="#fachadas"
               style={d(0)}
-              className="fade-up eyebrow flex items-center gap-3 text-steel [text-shadow:0_1px_16px_rgb(0_0_0/0.8)]"
+              className="fade-up group/tag inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-full border border-primary/60 bg-primary/15 py-2 pl-4 pr-3 label-cond text-[0.78rem] tracking-[0.16em] text-foreground backdrop-blur-md transition-colors hover:bg-primary/25 sm:text-sm"
             >
-              <span aria-hidden="true" className="h-0.5 w-10 bg-primary" />
-              Especializado em envelopamento
-            </p>
+              <Building2
+                aria-hidden="true"
+                className="size-4 shrink-0 text-red-text"
+              />
+              <span>Fachadas e revestimento em ACM</span>
+              <span className="hidden text-foreground/40 sm:inline">•</span>
+              <span className="text-steel">Piracaia e região</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 shrink-0 text-red-text transition-transform duration-300 motion-safe:group-hover/tag:translate-x-1"
+              />
+            </a>
 
             <h1
               id="hero-title"
@@ -84,9 +94,9 @@ export function Hero() {
               style={d(450)}
               className="fade-up mt-6 max-w-xl text-base leading-relaxed text-foreground/80 [text-shadow:0_1px_16px_rgb(0_0_0/0.8)] md:text-lg"
             >
-              Sinalização comercial e industrial, fachadas em ACM, envelopamento
-              de carros, motos e frotas, letras em relevo e adesivos — com
-              acabamento de quem é especialista.
+              Fachadas e revestimento em ACM, sinalização comercial e
+              industrial, letras em relevo, envelopamento de carros, motos e
+              frotas — com acabamento de quem é especialista.
             </p>
 
             <div
@@ -94,11 +104,11 @@ export function Hero() {
               className="fade-up mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <WhatsButton
-                msg="Olá! Vim pelo site e quero um orçamento de envelopamento."
+                msg="Olá! Vim pelo site e quero um orçamento de fachada em ACM."
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                Orçamento no WhatsApp
+                Orçar minha fachada
               </WhatsButton>
               <a
                 href="#portfolio"

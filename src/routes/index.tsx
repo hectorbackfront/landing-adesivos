@@ -4,7 +4,6 @@ import { useCallback, useMemo, useState } from "react";
 import { Contact } from "@/components/site/Contact";
 import { SiteContext, type SiteActions } from "@/components/site/context";
 import {
-  AREA,
   BRAND,
   EMPTY_QUOTE,
   INSTAGRAM_URL,
@@ -30,9 +29,10 @@ import { Showcase } from "@/components/site/Showcase";
 import { Tapes } from "@/components/site/Tapes";
 import { Wrap } from "@/components/site/Wrap";
 
-const TITLE = "Buiu Adesivos | Envelopamento e Comunicação Visual";
+const TITLE =
+  "Fachada em ACM e Comunicação Visual em Piracaia | Buiu Adesivos";
 const DESCRIPTION =
-  "Especialista em envelopamento de carros, motos e frotas. Fachadas em ACM, letras em relevo, adesivos, papel de parede e insulfilm. Orçamento rápido pelo WhatsApp.";
+  "Fachadas e revestimento em ACM, sinalização comercial e industrial, letras em relevo e envelopamento de veículos em Piracaia e região. Orçamento rápido pelo WhatsApp.";
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const Route = createFileRoute("/")({
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Envelopamento de veículos e frotas, fachadas, letras em relevo e adesivos com acabamento profissional. Orçamento pelo WhatsApp.",
+          "Fachadas e revestimento em ACM, sinalização e envelopamento de veículos em Piracaia e região. Orçamento pelo WhatsApp.",
       },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:image", content: OG_IMAGE },
@@ -71,12 +71,18 @@ export const Route = createFileRoute("/")({
           "@id": `${SITE_URL}/#empresa`,
           name: BRAND,
           description:
-            "Especializada em envelopamento de veículos e comunicação visual.",
+            "Fachadas e revestimento em ACM, sinalização e envelopamento de veículos.",
           url: `${SITE_URL}/`,
           image: OG_IMAGE,
           logo: `${SITE_URL}/icon-512.png`,
           telephone: `+${WHATS}`,
-          areaServed: AREA,
+          areaServed: { "@type": "City", name: "Piracaia" },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Piracaia",
+            addressRegion: "SP",
+            addressCountry: "BR",
+          },
           sameAs: [INSTAGRAM_URL],
           contactPoint: {
             "@type": "ContactPoint",

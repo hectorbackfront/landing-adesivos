@@ -68,8 +68,8 @@ export function Facades() {
             <WhatsButton msg="Olá! Quero um orçamento de fachada em ACM e sinalização.">
               Orçar fachada e sinalização
             </WhatsButton>
-            <a href="#portfolio" className={cx(BTN.ghost, BTN.size.md)}>
-              Ver portfólio
+            <a href="/fachada-em-acm" className={cx(BTN.ghost, BTN.size.md)}>
+              Saiba mais sobre ACM
             </a>
           </div>
         </div>

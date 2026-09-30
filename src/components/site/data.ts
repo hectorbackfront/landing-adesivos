@@ -39,9 +39,9 @@ export const pad = (n: number) => String(n).padStart(2, "0");
 
 export const NAV = [
   { id: "fachadas", label: "Fachadas ACM" },
-  { id: "envelopamento", label: "Envelopamento" },
   { id: "portfolio", label: "Portfólio" },
   { id: "servicos", label: "Serviços" },
+  { id: "envelopamento", label: "Envelopamento" },
   { id: "processo", label: "Processo" },
   { id: "contato", label: "Contato" },
 ] as const;
@@ -57,12 +57,6 @@ export const HERO_AREAS = [
     href: "#fachadas",
   },
   {
-    icon: Car,
-    title: "Veículos",
-    text: "Carros, motos e frotas",
-    href: "#envelopamento",
-  },
-  {
     icon: Building2,
     title: "Empresas",
     text: "Fachadas e identidade visual",
@@ -73,6 +67,12 @@ export const HERO_AREAS = [
     title: "Ambientes",
     text: "Papel de parede e películas",
     href: "#servicos",
+  },
+  {
+    icon: Car,
+    title: "Veículos",
+    text: "Carros, motos e frotas",
+    href: "#envelopamento",
   },
 ];
 

@@ -22,8 +22,8 @@ export function Facades() {
       <div className="container-site grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>
           <SectionIntro
-            num="05"
-            eyebrow="Fachadas e sinalização"
+            num="01"
+            eyebrow="Nossa especialidade"
             id="fachadas-title"
             title={
               <>

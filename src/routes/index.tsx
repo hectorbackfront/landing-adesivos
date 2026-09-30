@@ -54,7 +54,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Buiu Adesivos — Seu veículo. Sua marca. Seu estilo.",
+        content: "Buiu Adesivos — Sua fachada. Sua marca. Seu destaque.",
       },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
@@ -140,11 +140,11 @@ function Index() {
         <main id="conteudo">
           <Hero />
           <Tapes />
-          <Wrap />
-          <Portfolio />
-          <Showcase />
-          <Services />
           <Facades />
+          <Portfolio />
+          <Services />
+          <Wrap />
+          <Showcase />
           <Process />
           <Quote state={quote} setState={setQuote} />
           <Faq />

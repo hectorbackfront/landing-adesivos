@@ -76,7 +76,7 @@ export function Hero() {
             >
               <span className="line-mask">
                 <span className="line-inner" style={d(80)}>
-                  Seu veículo.
+                  Sua fachada.
                 </span>
               </span>
               <span className="line-mask">
@@ -86,7 +86,7 @@ export function Hero() {
               </span>
               <span className="line-mask">
                 <span className="line-inner" style={d(300)}>
-                  <span className="text-sheen">Seu estilo.</span>
+                  <span className="text-sheen">Seu destaque.</span>
                 </span>
               </span>
             </h1>

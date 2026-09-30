@@ -39,7 +39,7 @@ export function Showcase() {
       <div className="container-site grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <SectionIntro
-            num="03"
+            num="05"
             eyebrow="Em ação"
             id="em-acao-title"
             title="Veja o envelopamento de perto"

@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import { SERVICES, pad, type ServiceId } from "./data";
 import { useSite } from "./context";
-import { HERO_DESKTOP } from "./media";
 import { BTN, cx } from "./classes";
 import { WORK_IMAGES } from "./Portfolio";
 import { Picture, SectionIntro, WhatsButton } from "./ui";
@@ -29,10 +28,7 @@ export function Services() {
     pad(SERVICES.findIndex((s) => s.id === id) + 1);
 
   const highlights = SERVICES.filter((s) => s.id in HIGHLIGHTS);
-  const wrap = SERVICES.find((s) => s.id === "envelopamento");
-  const others = SERVICES.filter(
-    (s) => !(s.id in HIGHLIGHTS) && s.id !== "envelopamento",
-  );
+  const others = SERVICES.filter((s) => !(s.id in HIGHLIGHTS));
 
   return (
     <section
@@ -42,13 +38,13 @@ export function Services() {
     >
       <div className="container-site">
         <SectionIntro
-          num="04"
+          num="03"
           eyebrow="Serviços"
           id="servicos-title"
           title="Comunicação visual completa"
         >
           <p>
-            Do carro à fachada: tudo o que a sua marca precisa para ser vista,
+            Da fachada ao carro: tudo o que a sua marca precisa para ser vista,
             com o mesmo cuidado no acabamento.
           </p>
         </SectionIntro>
@@ -106,48 +102,6 @@ export function Services() {
               </li>
             );
           })}
-
-          {/* Especialidade da casa: envelopamento */}
-          {wrap && (
-            <li
-              data-reveal=""
-              className="group relative isolate min-h-[22rem] overflow-hidden rounded-2xl border border-border sm:col-span-2 lg:col-span-4 lg:min-h-[19rem]"
-            >
-              <Picture
-                img={HERO_DESKTOP}
-                alt=""
-                sizes="(min-width: 1024px) 100vw, 100vw"
-                className="absolute inset-0 -z-10"
-                imgClassName="size-full object-cover object-[35%_center] transition-transform duration-[1.6s] ease-[var(--ease-out-expo)] group-hover:scale-105"
-              />
-              <span className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/60 to-black/10 lg:bg-gradient-to-r lg:from-black/90 lg:via-black/60 lg:to-black/10" />
-              <div className="flex h-full flex-col justify-end p-6 sm:p-8 lg:max-w-2xl lg:p-10">
-                <span className="eyebrow inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-[0.7rem] text-white backdrop-blur-md">
-                  Especialidade da casa
-                </span>
-                <h3 className="display-title mt-5 text-4xl text-white sm:text-5xl">
-                  {wrap.title}
-                </h3>
-                <p className="mt-3 max-w-md text-white/80">{wrap.text}</p>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <button
-                    type="button"
-                    onClick={() => presetQuote({ service: wrap.id })}
-                    className={cx(BTN.primary, BTN.size.md)}
-                  >
-                    Orçar envelopamento
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </button>
-                  <a
-                    href="#envelopamento"
-                    className={cx(BTN.ghost, BTN.size.md)}
-                  >
-                    Ver detalhes
-                  </a>
-                </div>
-              </div>
-            </li>
-          )}
 
           {others.map((s, i) => (
             <li

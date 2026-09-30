@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, type CSSProperties } from "react";
-import { ArrowLeft, ArrowUpRight, Check, Plus } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, Play, Plus } from "lucide-react";
 import { AREA, INSTAGRAM, WORKS, wa } from "./data";
 import { SiteContext, useSite, type SiteActions } from "./context";
 import { BTN, cx } from "./classes";
@@ -72,6 +72,7 @@ const STEPS = [
 ];
 
 const GALLERY = [
+  "piracaia",
   "doisirmaos",
   "studiokarol",
   "fernandes",
@@ -151,9 +152,9 @@ export function AcmPage() {
                 <span className="text-chrome">e revestimento</span>
               </h1>
               <p className="fade-up mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg">
-                Projeto, fabricação e instalação de fachadas em ACM, com
-                letreiro e letras em relevo, para lojas, clínicas, indústrias e
-                prédios comerciais em {AREA}.
+                A Buiu Adesivos oferece projeto, fabricação e instalação de
+                fachadas em ACM, com letreiro e letras em relevo, para lojas,
+                clínicas, indústrias e prédios comerciais em {AREA}.
               </p>
               <div className="fade-up mt-8 flex flex-col gap-3 sm:flex-row">
                 <WhatsButton msg={MSG} size="lg" className="w-full sm:w-auto">
@@ -393,6 +394,14 @@ function GalleryTile({ id, delay }: { id: string; delay: number }) {
         style={{ objectPosition: work.pos }}
       />
       <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+      {work.video && (
+        <span className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-black/55 py-1 pl-1 pr-2.5 label-cond text-[0.62rem] tracking-[0.16em] backdrop-blur-md">
+          <span className="grid size-5 place-items-center rounded-full bg-primary">
+            <Play className="ml-px size-2.5 fill-current" aria-hidden="true" />
+          </span>
+          Vídeo
+        </span>
+      )}
       <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3.5 sm:p-4">
         <span className="min-w-0">
           <span className="eyebrow block text-[0.6rem] tracking-[0.18em] text-[oklch(0.78_0.14_25)]">

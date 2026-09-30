@@ -29,10 +29,9 @@ import { Showcase } from "@/components/site/Showcase";
 import { Tapes } from "@/components/site/Tapes";
 import { Wrap } from "@/components/site/Wrap";
 
-const TITLE =
-  "Fachada em ACM e Comunicação Visual em Piracaia | Buiu Adesivos";
+const TITLE = "Fachada em ACM e Comunicação Visual em Piracaia | Buiu Adesivos";
 const DESCRIPTION =
-  "Fachadas e revestimento em ACM, sinalização comercial e industrial, letras em relevo e envelopamento de veículos em Piracaia e região. Orçamento rápido pelo WhatsApp.";
+  "A Buiu Adesivos oferece fachadas e revestimento em ACM, sinalização comercial e industrial, letras em relevo e envelopamento de veículos em Piracaia e região. Orçamento rápido pelo WhatsApp.";
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const Route = createFileRoute("/")({
@@ -45,7 +44,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Fachadas e revestimento em ACM, sinalização e envelopamento de veículos em Piracaia e região. Orçamento pelo WhatsApp.",
+          "A Buiu Adesivos oferece fachadas e revestimento em ACM, sinalização e envelopamento de veículos em Piracaia e região. Orçamento pelo WhatsApp.",
       },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:image", content: OG_IMAGE },

@@ -27,8 +27,9 @@ export function Footer() {
             className="h-20 w-auto"
           />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Envelopamento de veículos e comunicação visual com acabamento
-            profissional. Atendimento em {AREA}.
+            A Buiu Adesivos oferece fachadas em ACM, sinalização comercial e
+            industrial e envelopamento de veículos, com acabamento profissional.
+            Atendimento em {AREA}.
           </p>
           <div className="mt-6 flex gap-2">
             <a
@@ -100,7 +101,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="container-site flex flex-col gap-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} Buiu Adesivos · Especializado em
+            © {new Date().getFullYear()} Buiu Adesivos · Fachadas em ACM e
             envelopamento · @{INSTAGRAM}
           </p>
           <a

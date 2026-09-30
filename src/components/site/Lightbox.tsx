@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { WORKS, pad } from "./data";
-import { UTV_POSTER, UTV_VIDEO } from "./media";
+import { imageSet, videoSet } from "./media";
 import { WORK_IMAGES } from "./Portfolio";
 import { cx } from "./classes";
 import { Picture, WhatsButton } from "./ui";
@@ -111,11 +111,19 @@ export function Lightbox({
                 muted
                 loop
                 playsInline
-                poster={UTV_POSTER.src}
+                poster={
+                  imageSet("video", `${work.id}-poster`, work.w, work.h).src
+                }
                 className="animate-in fade-in-0 zoom-in-95 max-h-full max-w-full rounded-xl bg-black duration-500"
               >
-                <source src={UTV_VIDEO.webm} type={UTV_VIDEO.webmType} />
-                <source src={UTV_VIDEO.mp4} type={UTV_VIDEO.mp4Type} />
+                <source
+                  src={videoSet(work.id).webm}
+                  type={videoSet(work.id).webmType}
+                />
+                <source
+                  src={videoSet(work.id).mp4}
+                  type={videoSet(work.id).mp4Type}
+                />
               </video>
             ) : (
               <Picture

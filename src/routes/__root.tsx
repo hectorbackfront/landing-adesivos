@@ -101,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         {
           name: "description",
           content:
-            "Fachadas e revestimento em ACM, sinalização, letras em relevo e envelopamento de veículos em Piracaia e região.",
+            "A Buiu Adesivos oferece fachadas e revestimento em ACM, sinalização, letras em relevo e envelopamento de veículos em Piracaia e região.",
         },
         { name: "author", content: "Buiu Adesivos" },
         { name: "theme-color", content: "#0b0b0d" },

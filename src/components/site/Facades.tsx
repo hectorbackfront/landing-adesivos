@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, Play } from "lucide-react";
 import { WORKS } from "./data";
 import { useSite } from "./context";
 import { BTN, cx } from "./classes";
@@ -80,7 +80,7 @@ export function Facades() {
             delay={0}
             className="aspect-[3/4] lg:row-span-2 lg:aspect-auto lg:h-full"
           />
-          <FacadeTile id="studiokarol" delay={90} className="aspect-[3/4]" />
+          <FacadeTile id="piracaia" delay={90} className="aspect-[3/4]" />
           <FacadeTile
             id="fernandes"
             delay={180}
@@ -127,6 +127,14 @@ function FacadeTile({
         style={{ objectPosition: work.pos }}
       />
       <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+      {work.video && (
+        <span className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-black/55 py-1 pl-1 pr-2.5 label-cond text-[0.62rem] tracking-[0.16em] backdrop-blur-md sm:left-4 sm:top-4">
+          <span className="grid size-5 place-items-center rounded-full bg-primary">
+            <Play className="ml-px size-2.5 fill-current" aria-hidden="true" />
+          </span>
+          Vídeo
+        </span>
+      )}
       <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3.5 sm:p-4">
         <span className="min-w-0">
           <span className="eyebrow block text-[0.6rem] tracking-[0.18em] text-[oklch(0.78_0.14_25)] sm:text-[0.66rem]">

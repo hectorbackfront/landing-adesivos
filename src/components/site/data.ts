@@ -301,6 +301,19 @@ export const WORKS: Work[] = [
     pos: "50% 30%",
     span: "sm:row-span-2 lg:row-span-2",
   },
+  {
+    id: "piracaia",
+    title: "Totem Piracaia",
+    tag: "Letreiro luminoso",
+    alt: "Totem com letreiro luminoso escrito Piracaia, aceso em verde à noite",
+    text: "Totem com letreiro em iluminação de LED: visual discreto de dia e destaque total à noite, para ser visto de longe.",
+    image: "piracaia-cover",
+    w: 478,
+    h: 850,
+    pos: "50% 45%",
+    span: "sm:row-span-2 lg:row-span-2",
+    video: true,
+  },
 ];
 
 /* ------------------------------------------------------------------ */

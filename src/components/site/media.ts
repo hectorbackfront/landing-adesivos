@@ -1,8 +1,6 @@
 import logo160 from "@/assets/brand/logo-buiu-160.webp";
 import logo240 from "@/assets/brand/logo-buiu-240.webp";
 import logo469 from "@/assets/brand/logo-buiu-469.webp";
-import utvMp4 from "@/assets/video/utv-wrap.mp4";
-import utvWebm from "@/assets/video/utv-wrap.webm";
 import printFlames from "@/assets/textures/print-flames.webp";
 
 /**
@@ -14,6 +12,37 @@ const files = import.meta.glob<string>(
   "../../assets/{hero,works,video}/*.{avif,webp,jpg,jpeg,png}",
   { eager: true, import: "default" },
 );
+
+/**
+ * Vídeos de trabalhos (src/assets/video/<id>-wrap.mp4|webm). Um work com
+ * `video: true` no data.ts busca aqui pelo próprio id — basta soltar os
+ * dois arquivos com esse nome que o vídeo já funciona no portfólio e no
+ * lightbox.
+ */
+const videoFiles = import.meta.glob<string>(
+  "../../assets/video/*-wrap.{mp4,webm}",
+  { eager: true, import: "default" },
+);
+
+export type VideoSet = {
+  mp4: string;
+  webm: string;
+  webmType: string;
+  mp4Type: string;
+};
+
+export function videoSet(id: string): VideoSet {
+  const find = (ext: string) =>
+    Object.entries(videoFiles).find(([path]) =>
+      path.endsWith(`/${id}-wrap.${ext}`),
+    )?.[1] ?? "";
+  return {
+    mp4: find("mp4"),
+    webm: find("webm"),
+    webmType: 'video/webm; codecs="av01.0.04M.08"',
+    mp4Type: 'video/mp4; codecs="avc1.64001F"',
+  };
+}
 
 export type ImageSet = {
   avif: string;
@@ -68,10 +97,5 @@ export const LOGO = {
   /** header: ~80px no celular, ~100px no desktop */
   headerSrcSet: `${logo160} 160w, ${logo240} 240w`,
 };
-export const UTV_VIDEO = {
-  webm: utvWebm,
-  mp4: utvMp4,
-  webmType: 'video/webm; codecs="av01.0.04M.08"',
-  mp4Type: 'video/mp4; codecs="avc1.64001F"',
-};
+export const UTV_VIDEO = videoSet("utv");
 export const PRINT_TEXTURE = printFlames;

@@ -7,7 +7,7 @@ const URL = `${SITE_URL}/fachada-em-acm`;
 const TITLE =
   "Fachada em ACM e Revestimento em Piracaia e região | Buiu Adesivos";
 const DESCRIPTION =
-  "Projeto, fabricação e instalação de fachada em ACM e revestimento, com letreiro e letras em relevo, em Piracaia e região. Peça seu orçamento pelo WhatsApp.";
+  "A Buiu Adesivos oferece projeto, fabricação e instalação de fachada em ACM e revestimento, com letreiro e letras em relevo, em Piracaia e região. Peça seu orçamento pelo WhatsApp.";
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const Route = createFileRoute("/fachada-em-acm")({

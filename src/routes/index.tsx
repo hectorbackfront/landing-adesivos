@@ -142,9 +142,9 @@ function Index() {
           <Tapes />
           <Facades />
           <Portfolio />
+          <Showcase />
           <Services />
           <Wrap />
-          <Showcase />
           <Process />
           <Quote state={quote} setState={setQuote} />
           <Faq />

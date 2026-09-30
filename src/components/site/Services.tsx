@@ -38,7 +38,7 @@ export function Services() {
     >
       <div className="container-site">
         <SectionIntro
-          num="03"
+          num="04"
           eyebrow="Serviços"
           id="servicos-title"
           title="Comunicação visual completa"

@@ -17,7 +17,7 @@ export function Wrap() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
             <SectionIntro
-              num="04"
+              num="05"
               eyebrow="Também fazemos"
               id="envelopamento-title"
               title={

@@ -2,12 +2,17 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Check, Maximize2, Pause, Play } from "lucide-react";
 import { useSite } from "./context";
 import { prefersReducedMotion } from "./hooks";
-import { UTV_POSTER, UTV_VIDEO } from "./media";
+import { imageSet, videoSet } from "./media";
 import { Picture, SectionIntro, WhatsButton } from "./ui";
 
+/** Trabalho em destaque nesta seção — troque o id pra destacar outro vídeo. */
+const FEATURED_ID = "piracaia";
+const POSTER = imageSet("video", `${FEATURED_ID}-poster`, 478, 850);
+const VIDEO = videoSet(FEATURED_ID);
+
 const POINTS = [
-  "Estampa exclusiva, impressa sob medida",
-  "Aplicação peça por peça, em todo o veículo",
+  "Estrutura e letreiro fabricados sob medida",
+  "Instalação completa, do buraco à fixação",
   "Acabamento revisado antes da entrega",
 ];
 
@@ -21,7 +26,7 @@ export function Showcase() {
       {/* luz ambiente tirada do próprio vídeo */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <Picture
-          img={UTV_POSTER}
+          img={POSTER}
           alt=""
           sizes="50vw"
           className="absolute inset-0"
@@ -39,15 +44,15 @@ export function Showcase() {
       <div className="container-site grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <SectionIntro
-            num="05"
+            num="03"
             eyebrow="Em ação"
             id="em-acao-title"
-            title="Veja o envelopamento de perto"
+            title="Veja a fachada ganhar vida"
           >
             <p>
-              Um envelopamento completo em veículo off-road, com estampa
-              personalizada. Repare no acabamento nas curvas, nas bordas e nos
-              recortes.
+              Um totem com letreiro luminoso, instalado do zero. Repare na
+              transformação: discreto de dia, com o letreiro aceso e a marca
+              visível de longe à noite.
             </p>
           </SectionIntro>
           <ul className="mt-8 space-y-3.5">
@@ -72,7 +77,7 @@ export function Showcase() {
           <div data-reveal="" style={{ "--d": "380ms" } as CSSProperties}>
             <WhatsButton
               className="mt-10"
-              msg="Olá! Vi o vídeo no site e quero um envelopamento como esse."
+              msg="Olá! Vi o vídeo do totem no site e quero uma fachada ou letreiro assim."
             >
               Quero um projeto assim
             </WhatsButton>
@@ -153,14 +158,14 @@ function VideoPlayer() {
           loop
           playsInline
           preload="none"
-          poster={UTV_POSTER.src}
-          aria-label="Vídeo: UTV off-road envelopado com estampa de chamas e caveira"
+          poster={POSTER.src}
+          aria-label="Vídeo: totem com letreiro luminoso instalado, aceso à noite"
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           className="size-full object-cover"
         >
-          <source src={UTV_VIDEO.webm} type={UTV_VIDEO.webmType} />
-          <source src={UTV_VIDEO.mp4} type={UTV_VIDEO.mp4Type} />
+          <source src={VIDEO.webm} type={VIDEO.webmType} />
+          <source src={VIDEO.mp4} type={VIDEO.mp4Type} />
         </video>
 
         <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-black/55 px-3 py-1.5 label-cond text-[0.68rem] tracking-[0.18em] backdrop-blur-md">
@@ -191,7 +196,7 @@ function VideoPlayer() {
             type="button"
             onClick={() => {
               videoRef.current?.pause();
-              openWork("utv");
+              openWork(FEATURED_ID);
             }}
             aria-label="Ver vídeo em tela cheia"
             className="grid size-11 shrink-0 place-items-center rounded-full bg-white/15 backdrop-blur-md transition-colors hover:bg-white/25"

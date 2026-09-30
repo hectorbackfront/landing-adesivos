@@ -2,7 +2,7 @@ import { useRef, useState, type CSSProperties } from "react";
 import { ArrowRight, Building2, Check, Play } from "lucide-react";
 import { HERO_AREAS, HERO_PROOF } from "./data";
 import { useSite } from "./context";
-import { HERO_DESKTOP, HERO_MOBILE, UTV_POSTER, UTV_VIDEO } from "./media";
+import { HERO_DESKTOP, HERO_MOBILE, imageSet, videoSet } from "./media";
 import { BTN, cx } from "./classes";
 import { Picture, WhatsButton } from "./ui";
 
@@ -193,6 +193,10 @@ export function Hero() {
   );
 }
 
+const REEL_ID = "piracaia";
+const REEL_POSTER = imageSet("video", `${REEL_ID}-poster`, 478, 850);
+const REEL_VIDEO = videoSet(REEL_ID);
+
 /** Cartão com o vídeo real (desktop). Carrega o vídeo só quando o mouse passa. */
 function ReelCard() {
   const { openWork } = useSite();
@@ -202,7 +206,7 @@ function ReelCard() {
   return (
     <button
       type="button"
-      onClick={() => openWork("utv")}
+      onClick={() => openWork(REEL_ID)}
       onPointerEnter={(e) => {
         if (e.pointerType === "mouse") setPreview(true);
       }}
@@ -211,11 +215,11 @@ function ReelCard() {
         setPreview(false);
       }}
       style={d(820)}
-      aria-label="Assistir ao vídeo do envelopamento personalizado em tela cheia"
+      aria-label="Assistir ao vídeo do totem com letreiro luminoso em tela cheia"
       className="fade-up group relative hidden aspect-[9/16] w-[13.5rem] overflow-hidden rounded-2xl border border-white/15 bg-surface text-left shadow-[0_40px_80px_-30px_rgb(0_0_0/0.95)] transition-[translate,border-color] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5 hover:border-white/35 lg:block xl:w-[15rem]"
     >
       <Picture
-        img={UTV_POSTER}
+        img={REEL_POSTER}
         alt=""
         sizes="240px"
         className="absolute inset-0"
@@ -232,8 +236,8 @@ function ReelCard() {
           aria-hidden="true"
           className="absolute inset-0 size-full object-cover"
         >
-          <source src={UTV_VIDEO.webm} type={UTV_VIDEO.webmType} />
-          <source src={UTV_VIDEO.mp4} type={UTV_VIDEO.mp4Type} />
+          <source src={REEL_VIDEO.webm} type={REEL_VIDEO.webmType} />
+          <source src={REEL_VIDEO.mp4} type={REEL_VIDEO.mp4Type} />
         </video>
       )}
       <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
@@ -255,9 +259,9 @@ function ReelCard() {
           </span>
         </span>
         <span className="display-title mt-3 block text-xl leading-none">
-          Envelopamento
+          Fachada com
           <br />
-          personalizado
+          letreiro luminoso
         </span>
       </span>
     </button>

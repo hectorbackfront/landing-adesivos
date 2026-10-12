@@ -28,7 +28,7 @@ export const SITE_URL = "https://buiuadesivos.com.br";
 export const BRAND = "Buiu Adesivos";
 export const PHONE_DISPLAY = "(11) 93362-0802";
 export const WHATS = "5511933620802";
-export const INSTAGRAM = "buiuadesivos";
+export const INSTAGRAM = "buiu_comunicacaovisual";
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM}/`;
 export const AREA = "Piracaia e região";
 

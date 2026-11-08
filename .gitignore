@@ -11,6 +11,9 @@ dist/
 # gerado automaticamente pelo TanStack Router no build
 src/routeTree.gen.ts
 
+# fotos/vídeos originais enviados pra gente escolher — não entram no repo
+_material-bruto/
+
 # sistema / editor
 .DS_Store
 *.log
